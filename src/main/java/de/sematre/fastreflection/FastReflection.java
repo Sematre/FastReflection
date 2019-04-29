@@ -4,8 +4,15 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public class FastReflection {
+
+	public static Object getFieldValue(Object instance, String fieldName) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		Field field = instance.getClass().getDeclaredField(fieldName);
+		field.setAccessible(true);
+		return field.get(instance);
+	}
 
 	public static void setFieldValue(Object instance, String fieldName, Object value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		Field field = instance.getClass().getDeclaredField(fieldName);
@@ -13,10 +20,16 @@ public class FastReflection {
 		field.set(instance, value);
 	}
 
-	public static Object getFieldValue(Object instance, String fieldName) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-		Field field = instance.getClass().getDeclaredField(fieldName);
+	public static Object getStaticFieldValue(Class<?> classType, String fieldName) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		Field field = classType.getDeclaredField(fieldName);
 		field.setAccessible(true);
-		return field.get(instance);
+		return field.get(null);
+	}
+
+	public static void setStaticFieldValue(Class<?> classType, String fieldName, Object value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		Field field = classType.getDeclaredField(fieldName);
+		field.setAccessible(true);
+		field.set(null, value);
 	}
 
 	public static Object callMethod(Object instance, String methodName, Object... parameters) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
