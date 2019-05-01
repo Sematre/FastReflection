@@ -23,6 +23,6 @@ public class TestClass {
 	}
 
 	private static String join(String a, String b) {
-		return String.join(" ", a, b);
+		return a + " " + b;
 	}
 }
