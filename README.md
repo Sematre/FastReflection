@@ -5,7 +5,7 @@
 [![License][license-image]][license-url]
 
 
-A simple equation parser for Java.
+A simple way to implement reflections in Java.
 
 ## Code example
 
